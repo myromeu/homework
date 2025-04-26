@@ -11,7 +11,6 @@ import (
 
 type CircularQueue struct {
 	values []int
-	cap    int
 	len    int
 	head   int
 	tail   int
@@ -20,7 +19,6 @@ type CircularQueue struct {
 func NewCircularQueue(cap int) CircularQueue {
 	return CircularQueue{
 		values: make([]int, cap),
-		cap:    cap,
 	}
 }
 
@@ -62,15 +60,16 @@ func (q *CircularQueue) Empty() bool {
 }
 
 func (q *CircularQueue) Full() bool {
-	return q.len == q.cap
+	return q.len == len(q.values)
 }
 
 func (q *CircularQueue) inc(val int) int {
-	return (val + 1) % q.cap
+	return (val + 1) % len(q.values)
 }
 
 func (q *CircularQueue) dec(val int) int {
-	return (val + q.cap - 1) % q.cap
+	cap := len(q.values)
+	return (val + cap - 1) % cap
 }
 
 func TestCircularQueue(t *testing.T) {
