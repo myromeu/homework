@@ -28,10 +28,11 @@ func (b *COWBuffer) Clone() COWBuffer {
 	if b == nil {
 		return COWBuffer{}
 	}
-	clone := COWBuffer{}
-	clone = *b
-	*clone.refs += 1
-	return clone
+	*b.refs += 1
+	return COWBuffer{
+		data: b.data,
+		refs: b.refs,
+	}
 }
 
 func (b *COWBuffer) Close() {
